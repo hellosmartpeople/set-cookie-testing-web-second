@@ -20,7 +20,7 @@ export const getServerSideProps = (context) => {
     };
   }
 
-  setCookie('iodUsers', 'true', { req, res, maxAge: 60 * 60 * 24 * 30, httpOnly: true});
+  setCookie('iodUsers', 'true', { req, res, maxAge: 60 * 60 * 24 * 400, httpOnly: true});
 
   return { props: {} };
 };
