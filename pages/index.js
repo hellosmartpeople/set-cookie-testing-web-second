@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Header from '@components/Header'
 import Footer from '@components/Footer'
 import { setCookie, getCookie} from 'cookies-next';
+const querystring = require('querystring');
 
 
 export const getServerSideProps = (context) => {
@@ -12,10 +13,13 @@ export const getServerSideProps = (context) => {
   const { query } = context
 
   if (!userCookie && !('_gl' in query)) {
+    query.referrer = host
+    const searchParams = querystring.stringify(query);
+
     return {
       redirect: {
         permanent: false,
-        destination: 'https://redirection-testing-web.herokuapp.com/?referrer='+host,
+        destination: 'https://redirection-testing-web.herokuapp.com/?'+searchParams,
       },
     };
   }
