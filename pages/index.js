@@ -10,10 +10,14 @@ export const getServerSideProps = (context) => {
   const res = context.res
   const userCookie = getCookie('iodUsers', { req, res });
   const host = context.req.headers.host
+  const referer = context.req.headers.referer
   const { query } = context
 
   if (!userCookie && !('_gl' in query)) {
-    query.referrer = host
+    query.sourceweb = host
+    if (referer){
+      query.referer = referer
+    }
     const searchParams = querystring.stringify(query);
 
     return {
