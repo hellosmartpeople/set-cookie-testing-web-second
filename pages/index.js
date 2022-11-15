@@ -10,20 +10,23 @@ export const getServerSideProps = (context) => {
   const res = context.res
   const userCookie = getCookie('iodUsers', { req, res });
   const host = context.req.headers.host
+  const url = context.req.url
+  const fullURL = host+url
   const referer = context.req.headers.referer
   const { query } = context
+  const queryRedirection = {}
 
   if (!userCookie && !('_gl' in query)) {
-    query.sourceweb = host
+    queryRedirection.sourceweb = fullURL
     if (referer){
-      query.referer = referer
+      queryRedirection.referer = referer
     }
-    const searchParams = querystring.stringify(query);
+    const searchParams = querystring.stringify(queryRedirection);
 
     return {
       redirect: {
         permanent: false,
-        destination: 'https://redirection-testing-web.herokuapp.com/?'+searchParams,
+        destination: 'https://wondrous-cendol-36fe15.netlify.app/redirection?'+searchParams,
       },
     };
   }
