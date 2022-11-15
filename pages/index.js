@@ -17,10 +17,15 @@ export const getServerSideProps = (context) => {
   const queryRedirection = {}
 
   if (!userCookie && !('_gl' in query)) {
-    queryRedirection.sourceweb = fullURL
     if (referer){
-      queryRedirection.referer = referer
+      if (fullURL.includes("?")){
+        fullURL = fullURL+'&referer='+referer
+      }else{
+        fullURL = fullURL+'?referer='+referer
+      }
     }
+    queryRedirection.sourceweb = fullURL
+
     const searchParams = querystring.stringify(queryRedirection);
 
     return {
