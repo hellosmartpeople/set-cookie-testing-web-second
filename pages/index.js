@@ -11,7 +11,7 @@ export const getServerSideProps = (context) => {
   const userCookie = getCookie('iodUsers', { req, res });
   const host = context.req.headers.host
   const url = context.req.url
-  const fullURL = host+url
+  var fullURL = host+url
   const referer = context.req.headers.referer
   const { query } = context
   const queryRedirection = {}
